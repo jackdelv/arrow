@@ -284,6 +284,7 @@ class SerializedFile : public ParquetFileReader::Contents {
   SerializedFile(std::shared_ptr<ArrowInputFile> source,
                  const ReaderProperties& props = default_reader_properties())
       : source_(std::move(source)), properties_(props) {
+    syslog(0, "SerializedFile Constructing: %p", this);
     PARQUET_ASSIGN_OR_THROW(source_size_, source_->GetSize());
   }
 
@@ -709,9 +710,11 @@ std::string SerializedFile::HandleAadPrefix(
 // ----------------------------------------------------------------------
 // ParquetFileReader public API
 
-ParquetFileReader::ParquetFileReader() {}
+ParquetFileReader::ParquetFileReader() {
+}
 
 ParquetFileReader::~ParquetFileReader() {
+  syslog(0, "ParquetFileReader Destructing: %p", contents_.get());
   try {
     Close();
   } catch (...) {
@@ -770,6 +773,7 @@ std::unique_ptr<ParquetFileReader> ParquetFileReader::Open(
     std::shared_ptr<::arrow::io::RandomAccessFile> source, const ReaderProperties& props,
     std::shared_ptr<FileMetaData> metadata) {
   auto contents = SerializedFile::Open(std::move(source), props, std::move(metadata));
+  syslog(0, "ParquetFileReader Opening: %p", contents.get());
   std::unique_ptr<ParquetFileReader> result = std::make_unique<ParquetFileReader>();
   result->Open(std::move(contents));
   return result;
@@ -817,7 +821,6 @@ void ParquetFileReader::Open(std::unique_ptr<ParquetFileReader::Contents> conten
 }
 
 void ParquetFileReader::Close() {
-  syslog(0, "ParquetFileReader Destructing: %p", contents_.get());
   if (contents_) {
     contents_->Close();
   }
