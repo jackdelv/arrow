@@ -817,7 +817,7 @@ void ParquetFileReader::Open(std::unique_ptr<ParquetFileReader::Contents> conten
 }
 
 void ParquetFileReader::Close() {
-  syslog(0, "ParquetFileReader Destructing: %p", contents_);
+  syslog(0, "ParquetFileReader Destructing: %p", contents_.get());
   if (contents_) {
     contents_->Close();
   }
