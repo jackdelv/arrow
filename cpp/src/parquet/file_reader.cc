@@ -48,6 +48,8 @@
 #include "parquet/schema.h"
 #include "parquet/types.h"
 
+#include <syslog.h>
+
 using arrow::internal::AddWithOverflow;
 
 namespace parquet {
@@ -286,6 +288,7 @@ class SerializedFile : public ParquetFileReader::Contents {
   }
 
   ~SerializedFile() override {
+    syslog(0, "SerializedFile Destructing: %p", this);
     try {
       Close();
     } catch (...) {
@@ -814,6 +817,7 @@ void ParquetFileReader::Open(std::unique_ptr<ParquetFileReader::Contents> conten
 }
 
 void ParquetFileReader::Close() {
+  syslog(0, "ParquetFileReader Destructing: %p", contents_);
   if (contents_) {
     contents_->Close();
   }
