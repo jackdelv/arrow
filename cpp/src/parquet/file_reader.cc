@@ -284,12 +284,10 @@ class SerializedFile : public ParquetFileReader::Contents {
   SerializedFile(std::shared_ptr<ArrowInputFile> source,
                  const ReaderProperties& props = default_reader_properties())
       : source_(std::move(source)), properties_(props) {
-    syslog(0, "SerializedFile Constructing: %p", this);
     PARQUET_ASSIGN_OR_THROW(source_size_, source_->GetSize());
   }
 
   ~SerializedFile() override {
-    syslog(0, "SerializedFile Destructing: %p", this);
     try {
       Close();
     } catch (...) {
