@@ -296,19 +296,6 @@ class SerializedFile : public ParquetFileReader::Contents {
 
   void Close() override {
     if (file_decryptor_) file_decryptor_->WipeOutDecryptionKeys();
-    
-    // Cleanup some resources
-    if(source_) {
-      free(source_.get());
-    }
-
-    if(cached_source_) {
-      free(cached_source_.get());
-    }
-    
-    if(file_metadata_) {
-      free(file_metadata_.get());
-    }
   }
 
   std::shared_ptr<RowGroupReader> GetRowGroup(int i) override {
