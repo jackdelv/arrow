@@ -288,8 +288,6 @@ class SerializedFile : public ParquetFileReader::Contents {
   }
 
   ~SerializedFile() override {
-    syslog(0, "Address: %p, Source pointers: %d, Cached Source pointers: %d, FileMetadata pointers: %d", 
-      this, source_.use_count(), cached_source_.use_count(), file_metadata_.use_count());
     try {
       Close();
     } catch (...) {
