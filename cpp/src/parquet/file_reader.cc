@@ -300,17 +300,14 @@ class SerializedFile : public ParquetFileReader::Contents {
     // Cleanup some resources
     if(source_) {
       free(source_.get());
-      source_ = nullptr;
     }
 
     if(cached_source_) {
       free(cached_source_.get());
-      cached_source_ = nullptr;
     }
     
     if(file_metadata_) {
       free(file_metadata_.get());
-      file_metadata_ = nullptr;
     }
   }
 
