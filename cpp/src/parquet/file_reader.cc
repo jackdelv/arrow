@@ -289,7 +289,6 @@ class SerializedFile : public ParquetFileReader::Contents {
 
   ~SerializedFile() override {
     try {
-      delete source_.get();
       Close();
     } catch (...) {
     }
@@ -297,6 +296,7 @@ class SerializedFile : public ParquetFileReader::Contents {
 
   void Close() override {
     if (file_decryptor_) file_decryptor_->WipeOutDecryptionKeys();
+    delete file_decryptor_.get();
   }
 
   std::shared_ptr<RowGroupReader> GetRowGroup(int i) override {
