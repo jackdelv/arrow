@@ -289,6 +289,7 @@ class SerializedFile : public ParquetFileReader::Contents {
 
   ~SerializedFile() override {
     try {
+      delete source_.get();
       Close();
     } catch (...) {
     }
