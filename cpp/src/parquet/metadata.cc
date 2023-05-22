@@ -883,8 +883,9 @@ FileMetaData::FileMetaData(const void* metadata, uint32_t* metadata_len,
 FileMetaData::FileMetaData() : impl_(new FileMetaDataImpl()) {}
 
 FileMetaData::~FileMetaData() {
-  if (impl_) {
+  if (impl_.get()) {
     delete impl_.get();
+    impl_.reset(nullptr);
   }
 }
 
