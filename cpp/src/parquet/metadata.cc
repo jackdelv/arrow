@@ -883,7 +883,6 @@ FileMetaData::FileMetaData(const void* metadata, uint32_t* metadata_len,
 FileMetaData::FileMetaData() : impl_(new FileMetaDataImpl()) {}
 
 FileMetaData::~FileMetaData() {
-  syslog(0, "FileMetaData Destuctor: %p, implementation pointer: %p", this, impl_.get());
   if (impl_) {
     delete impl_.get();
   }
