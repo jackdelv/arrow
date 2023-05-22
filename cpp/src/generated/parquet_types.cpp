@@ -10,6 +10,7 @@
 #include <ostream>
 
 #include <thrift/TToString.h>
+#include <syslog.h>
 
 namespace parquet { namespace format {
 
@@ -5912,6 +5913,7 @@ void ColumnChunk::printTo(std::ostream& out) const {
 
 
 RowGroup::~RowGroup() noexcept {
+  syslog(0, "RowGroup Destructor: %p, # of Columns %d", &columns, columns.size());
 }
 
 
