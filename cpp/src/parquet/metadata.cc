@@ -882,7 +882,12 @@ FileMetaData::FileMetaData(const void* metadata, uint32_t* metadata_len,
 
 FileMetaData::FileMetaData() : impl_(new FileMetaDataImpl()) {}
 
-FileMetaData::~FileMetaData() = default;
+FileMetaData::~FileMetaData() {
+  syslog(0, "FileMetaData Destuctor: %p, implementation pointer: %p", this, impl_.get());
+  if (impl_.get()) {
+    delete impl_.get();
+  }
+}
 
 bool FileMetaData::Equals(const FileMetaData& other) const {
   return impl_->Equals(*other.impl_);
