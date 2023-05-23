@@ -593,6 +593,7 @@ class FileMetaData::FileMetaDataImpl {
   FileMetaDataImpl() = default;
   
   ~FileMetaDataImpl() {
+    delete metadata_.get();
     metadata_.reset();
   }
   
