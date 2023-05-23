@@ -4847,6 +4847,9 @@ void PageEncodingStats::printTo(std::ostream& out) const {
 
 
 ColumnMetaData::~ColumnMetaData() noexcept {
+  this->encodings.clear();
+  this->encoding_stats.clear();
+  this->key_value_metadata.clear();
 }
 
 
