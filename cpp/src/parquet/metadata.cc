@@ -882,7 +882,9 @@ FileMetaData::FileMetaData(const void* metadata, uint32_t* metadata_len,
 
 FileMetaData::FileMetaData() : impl_(new FileMetaDataImpl()) {}
 
-FileMetaData::~FileMetaData() = default;
+FileMetaData::~FileMetaData() {
+  metadata_.reset();
+}
 
 bool FileMetaData::Equals(const FileMetaData& other) const {
   return impl_->Equals(*other.impl_);
