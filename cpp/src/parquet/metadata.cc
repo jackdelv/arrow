@@ -591,7 +591,7 @@ std::vector<SortingColumn> RowGroupMetaData::sorting_columns() const {
 class FileMetaData::FileMetaDataImpl {
  public:
   FileMetaDataImpl() = default;
-
+  ~FileMetaDataImpl() = default;
   explicit FileMetaDataImpl(
       const void* metadata, uint32_t* metadata_len, const ReaderProperties& properties,
       std::shared_ptr<InternalFileDecryptor> file_decryptor = nullptr)
@@ -882,9 +882,7 @@ FileMetaData::FileMetaData(const void* metadata, uint32_t* metadata_len,
 
 FileMetaData::FileMetaData() : impl_(new FileMetaDataImpl()) {}
 
-FileMetaData::~FileMetaData() {
-  metadata_.reset(NULL);
-}
+FileMetaData::~FileMetaData() = default;
 
 bool FileMetaData::Equals(const FileMetaData& other) const {
   return impl_->Equals(*other.impl_);
