@@ -4846,11 +4846,7 @@ void PageEncodingStats::printTo(std::ostream& out) const {
 }
 
 
-ColumnMetaData::~ColumnMetaData() noexcept {
-  this->encodings.clear();
-  this->encoding_stats.clear();
-  this->key_value_metadata.clear();
-}
+ColumnMetaData::~ColumnMetaData() noexcept {}
 
 
 void ColumnMetaData::__set_type(const Type::type val) {
@@ -5915,10 +5911,7 @@ void ColumnChunk::printTo(std::ostream& out) const {
 }
 
 
-RowGroup::~RowGroup() noexcept {
-  this->columns.clear();
-}
-
+RowGroup::~RowGroup() noexcept {}
 
 void RowGroup::__set_columns(const std::vector<ColumnChunk> & val) {
   this->columns = val;
