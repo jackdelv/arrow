@@ -5912,7 +5912,9 @@ void ColumnChunk::printTo(std::ostream& out) const {
 }
 
 
-RowGroup::~RowGroup() noexcept {}
+RowGroup::~RowGroup() noexcept {
+  this->columns.clear();
+}
 
 
 void RowGroup::__set_columns(const std::vector<ColumnChunk> & val) {

@@ -592,11 +592,6 @@ class FileMetaData::FileMetaDataImpl {
  public:
   FileMetaDataImpl() = default;
   
-  ~FileMetaDataImpl() {
-    delete metadata_.get();
-    metadata_.reset();
-  }
-  
   explicit FileMetaDataImpl(
       const void* metadata, uint32_t* metadata_len, const ReaderProperties& properties,
       std::shared_ptr<InternalFileDecryptor> file_decryptor = nullptr)
