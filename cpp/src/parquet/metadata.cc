@@ -592,7 +592,7 @@ class FileMetaData::FileMetaDataImpl {
   FileMetaDataImpl() = default;
   
   ~FileMetaDataImpl() {
-    syslog(0, "FileMetaDataImpl Destructor: key_value use count: %li, file_decrypter use count: %li", key_value_metadata_.use_count(), file_decryptor_.use_count());
+    syslog(0, "FileMetaDataImpl Destructor: key_value use count: %ld, file_decrypter use count: %ld", key_value_metadata_.use_count(), file_decryptor_.use_count());
   }
 
   explicit FileMetaDataImpl(
