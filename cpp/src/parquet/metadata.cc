@@ -556,7 +556,6 @@ bool RowGroupMetaData::Equals(const RowGroupMetaData& other) const {
 }
 
 int RowGroupMetaData::num_columns() const { return impl_->num_columns(); }
-
 int64_t RowGroupMetaData::num_rows() const { return impl_->num_rows(); }
 
 int64_t RowGroupMetaData::total_byte_size() const { return impl_->total_byte_size(); }
@@ -592,6 +591,10 @@ class FileMetaData::FileMetaDataImpl {
  public:
   FileMetaDataImpl() = default;
   
+  ~FileMetaDataImpl() {
+    syslog(0, "FileMetaDataImpl Destructor: key_value use count: %li, file_decrypter use count: %li", key_value_metadata_.use_count(), file_decryptor_.use_count());
+  }
+
   explicit FileMetaDataImpl(
       const void* metadata, uint32_t* metadata_len, const ReaderProperties& properties,
       std::shared_ptr<InternalFileDecryptor> file_decryptor = nullptr)
