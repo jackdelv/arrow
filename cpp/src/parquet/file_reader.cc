@@ -288,8 +288,8 @@ class SerializedFile : public ParquetFileReader::Contents {
   }
 
   ~SerializedFile() override {
-    syslog(0, "SerializedFile Destructor: file_metadata use count: %ld, source use count: %ld, page_index_reader use count: %ld, file_decryptor use count: %ld",
-      file_metadata_.use_count(), source_.use_count(), page_index_reader_.use_count(), file_decryptor_.use_count());  
+    syslog(0, "SerializedFile Destructor: file_metadata use count: %d, source use count: %d, page_index_reader use count: %d, file_decryptor use count: %d",
+      (int) file_metadata_.use_count(), (int) source_.use_count(), (int) page_index_reader_.use_count(), (int) file_decryptor_.use_count());  
     try {
       Close();
     } catch (...) {
