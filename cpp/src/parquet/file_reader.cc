@@ -48,8 +48,6 @@
 #include "parquet/schema.h"
 #include "parquet/types.h"
 
-#include <syslog.h>
-
 using arrow::internal::AddWithOverflow;
 
 namespace parquet {
@@ -288,8 +286,6 @@ class SerializedFile : public ParquetFileReader::Contents {
   }
 
   ~SerializedFile() override {
-    syslog(0, "SerializedFile Destructor: file_metadata use count: %d, source use count: %d, page_index_reader use count: %d, file_decryptor use count: %d",
-      (int) file_metadata_.use_count(), (int) source_.use_count(), (int) page_index_reader_.use_count(), (int) file_decryptor_.use_count());  
     try {
       Close();
     } catch (...) {
@@ -714,7 +710,6 @@ ParquetFileReader::ParquetFileReader() {
 }
 
 ParquetFileReader::~ParquetFileReader() {
-  syslog(0, "ParquetFileReader Destructing: %p", contents_.get());
   try {
     Close();
   } catch (...) {
@@ -773,7 +768,6 @@ std::unique_ptr<ParquetFileReader> ParquetFileReader::Open(
     std::shared_ptr<::arrow::io::RandomAccessFile> source, const ReaderProperties& props,
     std::shared_ptr<FileMetaData> metadata) {
   auto contents = SerializedFile::Open(std::move(source), props, std::move(metadata));
-  syslog(0, "ParquetFileReader Opening: %p", contents.get());
   std::unique_ptr<ParquetFileReader> result = std::make_unique<ParquetFileReader>();
   result->Open(std::move(contents));
   return result;

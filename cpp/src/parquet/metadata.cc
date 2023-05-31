@@ -35,8 +35,6 @@
 #include "parquet/schema_internal.h"
 #include "parquet/thrift_internal.h"
 
-#include <syslog.h>
-
 namespace parquet {
 
 const ApplicationVersion& ApplicationVersion::PARQUET_251_FIXED_VERSION() {
@@ -593,10 +591,6 @@ class FileMetaData::FileMetaDataImpl {
  public:
   FileMetaDataImpl() = default;
   
-  ~FileMetaDataImpl() {
-    syslog(0, "FileMetaDataImpl Destructor: key_value use count: %d, file_decrypter use count: %d", (int) key_value_metadata_.use_count(), (int) file_decryptor_.use_count());
-  }
-
   explicit FileMetaDataImpl(
       const void* metadata, uint32_t* metadata_len, const ReaderProperties& properties,
       std::shared_ptr<InternalFileDecryptor> file_decryptor = nullptr)
